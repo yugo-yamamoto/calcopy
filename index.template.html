@@ -55,7 +55,11 @@
     display: block; width: 100%; height: auto;
     border: 1px solid var(--line); border-radius: 10px; background: #fff;
   }
-  figcaption { color: var(--muted); font-size: 12.5px; margin-top: 6px; }
+  .num {
+    display: inline-block; width: 17px; height: 17px; margin: 0 1px; border-radius: 50%;
+    background: #d93025; color: #fff; font-size: 11px; font-weight: 700;
+    text-align: center; line-height: 17px; vertical-align: 1px;
+  }
   ol.steps { margin: 8px 0 14px; padding-left: 1.6em; }
   ol.steps li { margin-bottom: 3px; }
   .note { color: var(--muted); font-size: 13px; margin: 8px 0 0; padding-left: 1.1em; }
@@ -76,13 +80,12 @@
       ブックマークバーの表示は <code>Ctrl+Shift+B</code> で切り替えられます。
     </div>
   </div>
-  <figure>
-    <img src="docs/calcopy-install.svg" alt="calcopy ボタンをブックマークバーにドラッグ＆ドロップする操作の図">
-  </figure>
-
   <h2>2. 使い方</h2>
   <p>Google カレンダーを開いた状態で、ブックマークバーの <strong>calcopy</strong> をクリックします。
     コピー結果は画面の右下にトーストで表示されます（クリックで閉じる / 6 秒で自動的に消える）。</p>
+  <p class="hint">以下の画面イメージはダミーデータです。図中の
+    <span class="num">1</span><span class="num">2</span><span class="num">3</span>
+    は、各手順の番号に対応しています。</p>
   <table>
     <thead>
       <tr><th>実行する場所</th><th>コピーされるもの</th></tr>
@@ -102,7 +105,6 @@
   <h3>2-1. 予定 1 件をコピーする（詳細ポップアップ）</h3>
   <figure>
     <img src="docs/calcopy-detail.svg" alt="予定をクリックして詳細ポップアップを開き、calcopy を実行する操作の図">
-    <figcaption>図はダミー画面です</figcaption>
   </figure>
   <ol class="steps">
     <li>コピーしたい予定をクリックして、詳細ポップアップを開く</li>
@@ -125,7 +127,6 @@ https://us02web.zoom.us/j/1234567890?pwd=…</pre>
   <h3>2-2. 検索結果をまとめてコピーする</h3>
   <figure>
     <img src="docs/calcopy-search.svg" alt="検索結果一覧で calcopy を実行し、3 件がまとめてコピーされる操作の図">
-    <figcaption>図はダミー画面です</figcaption>
   </figure>
   <ol class="steps">
     <li>カレンダー上部の検索窓で検索し、結果一覧を表示する</li>

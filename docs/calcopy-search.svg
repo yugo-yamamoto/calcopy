@@ -43,17 +43,16 @@
   <text x="350" y="219" font-size="13" fill="#3c4043">打ち合わせ（仮）</text>
   <line x1="24" y1="235" x2="856" y2="235" stroke="#e8eaed"/>
 
-  <!-- 手順① -->
-  <path d="M62 48 C 58 80, 90 96, 128 102" fill="none" stroke="#d93025" stroke-width="2" stroke-dasharray="5 4"/>
-  <circle cx="65" cy="34" r="13" fill="#d93025"/>
-  <text x="65" y="39" font-size="13" fill="#ffffff" text-anchor="middle" font-weight="bold">1</text>
-  <text x="138" y="104" font-size="12.5" fill="#d93025">検索結果を表示した状態で calcopy をクリック</text>
+  <!-- 手順① 検索窓 -->
+  <circle cx="102" cy="65" r="13" fill="#d93025"/>
+  <text x="102" y="70" font-size="13" fill="#ffffff" text-anchor="middle" font-weight="bold">1</text>
 
-  <!-- 手順② コピー結果のトースト -->
-  <text x="40" y="300" font-size="12.5" fill="#d93025">画面の右下に結果が出る</text>
-  <text x="40" y="320" font-size="12.5" fill="#d93025">（この内容がそのままクリップボードに入る）</text>
-  <path d="M350 336 C 390 344, 410 340, 430 334" fill="none" stroke="#d93025" stroke-width="2" stroke-dasharray="5 4"/>
-  <polygon points="438,333 427,328 428,339" fill="#d93025"/>
+  <!-- 手順② ブックマークをクリック -->
+  <circle cx="65" cy="34" r="13" fill="#d93025"/>
+  <text x="65" y="39" font-size="13" fill="#ffffff" text-anchor="middle" font-weight="bold">2</text>
+
+  <!-- 手順③ コピー結果のトースト -->
+
   <rect x="446" y="264" width="410" height="146" rx="10" fill="#202124"/>
   <text x="466" y="292" font-size="12.5" fill="#ffffff" font-weight="bold">コピーしました [検索結果一覧] 3件</text>
   <text x="466" y="322" font-size="12" fill="#d7e2ee">2026/09/15(火) 18:00～19:00</text>
@@ -61,5 +60,5 @@
   <text x="466" y="366" font-size="12" fill="#d7e2ee">2026/09/18(金) 15:00～16:00</text>
   <text x="466" y="394" font-size="10.5" fill="#9aa0a6">クリックで閉じる / 6秒で自動的に消える</text>
   <circle cx="446" cy="264" r="13" fill="#d93025"/>
-  <text x="446" y="269" font-size="13" fill="#ffffff" text-anchor="middle" font-weight="bold">2</text>
+  <text x="446" y="269" font-size="13" fill="#ffffff" text-anchor="middle" font-weight="bold">3</text>
 </svg>

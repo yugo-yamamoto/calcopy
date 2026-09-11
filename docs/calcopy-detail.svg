@@ -42,8 +42,6 @@
   <text x="112" y="187" font-size="13" fill="#ffffff" text-anchor="middle" font-weight="bold">1</text>
   <path d="M120 170 C 132 154, 140 146, 148 140" fill="none" stroke="#d93025" stroke-width="2" stroke-dasharray="5 4"/>
   <polygon points="152,134 142,139 149,145" fill="#d93025"/>
-  <text x="40" y="228" font-size="12.5" fill="#d93025">予定をクリックして</text>
-  <text x="40" y="246" font-size="12.5" fill="#d93025">詳細ポップアップを開く</text>
 
   <!-- 詳細ポップアップ -->
   <rect x="306" y="76" width="404" height="252" rx="10" fill="#f1f3f4"/>
@@ -82,17 +80,12 @@
   <text x="348" y="291" font-size="10.5" fill="#70757a">説明: Zoom ミーティングへの招待 ...</text>
 
   <!-- 手順② calcopy をクリック -->
-  <text x="856" y="58" font-size="12.5" fill="#d93025" text-anchor="end">ポップアップを開いたまま calcopy をクリック</text>
   <circle cx="508" cy="52" r="13" fill="#d93025"/>
   <text x="508" y="57" font-size="13" fill="#ffffff" text-anchor="middle" font-weight="bold">2</text>
   <path d="M494 50 C 380 58, 200 56, 104 46" fill="none" stroke="#d93025" stroke-width="2" stroke-dasharray="5 4"/>
   <polygon points="96,43 108,41 105,51" fill="#d93025"/>
 
   <!-- 手順③ コピー結果 -->
-  <text x="40" y="400" font-size="12.5" fill="#d93025">タイトル / 日付 時刻 / 会議URL の3行がコピーされる</text>
-  <text x="40" y="420" font-size="12.5" fill="#d93025">（ゲストや説明はコピーされない）</text>
-  <path d="M330 428 C 380 436, 410 432, 430 428" fill="none" stroke="#d93025" stroke-width="2" stroke-dasharray="5 4"/>
-  <polygon points="438,427 427,422 428,433" fill="#d93025"/>
   <rect x="446" y="358" width="410" height="146" rx="10" fill="#202124"/>
   <text x="466" y="386" font-size="12.5" fill="#ffffff" font-weight="bold">コピーしました [詳細] 1件</text>
   <text x="466" y="416" font-size="12" fill="#d7e2ee">サンプル定例MTG</text>
