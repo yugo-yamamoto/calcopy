@@ -19,7 +19,6 @@
   h1 { font-size: 24px; margin: 0 0 4px; }
   h2 { font-size: 17px; margin: 32px 0 10px; padding-bottom: 6px; border-bottom: 2px solid var(--line); }
   .lead { color: var(--muted); margin: 0 0 24px; }
-  .card { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 20px; }
   .drop {
     display: flex; gap: 16px; align-items: center; flex-wrap: wrap;
     background: var(--card); border: 2px dashed var(--accent); border-radius: 10px; padding: 20px;
@@ -30,25 +29,14 @@
   }
   .bm:active { cursor: grabbing; }
   .hint { color: var(--muted); font-size: 13px; }
-  button {
-    font: inherit; font-size: 13px; padding: 7px 14px; border-radius: 7px;
-    border: 1px solid var(--line); background: #fff; color: var(--fg); cursor: pointer;
-  }
-  button:hover { background: var(--code); }
   table { border-collapse: collapse; width: 100%; font-size: 14px; }
   th, td { border: 1px solid var(--line); padding: 9px 12px; text-align: left; vertical-align: top; }
   th { background: var(--code); white-space: nowrap; }
-  code, pre, #log {
+  code, pre {
     font-family: ui-monospace, Consolas, "BIZ UDGothic", monospace;
   }
   code { background: var(--code); padding: 2px 6px; border-radius: 4px; font-size: 13px; }
   pre { background: var(--code); padding: 14px; border-radius: 8px; overflow-x: auto; font-size: 13px; }
-  #log {
-    background: #10141a; color: #d7e2ee; border-radius: 8px; padding: 12px;
-    height: 190px; overflow-y: auto; font-size: 12px; line-height: 1.7; white-space: pre-wrap;
-  }
-  .row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-bottom: 10px; }
-  .ok { color: #34a853; } .warn { color: #f9ab00; } .err { color: #ff6b6b; }
   h3 { font-size: 16px; margin: 30px 0 8px; }
   figure { margin: 12px 0 16px; }
   figure img {
@@ -146,79 +134,10 @@ https://us02web.zoom.us/j/1234567890?pwd=…</pre>
       検索結果をまとめてコピーしたいときは、ポップアップを閉じてから実行してください。</li>
   </ul>
 
-  <h2>3. 動作ログ</h2>
-  <div class="row">
-    <button id="clearBtn" type="button">ログをクリア</button>
-    <button id="copyLogBtn" type="button">ログをコピー（AI に渡す用）</button>
-  </div>
-  <div id="log"></div>
-
   <p class="hint" style="margin-top:28px; border-top:1px solid var(--line); padding-top:14px">
     ソースコード・使い方の詳細:
     <a href="https://github.com/yugo-yamamoto/calcopy">github.com/yugo-yamamoto/calcopy</a>
   </p>
 </main>
-
-<script>
-(function () {
-  'use strict';
-
-  var logEl = document.getElementById('log');
-
-  function log(msg, cls) {
-    var t = new Date().toTimeString().slice(0, 8);
-    var line = document.createElement('div');
-    if (cls) line.className = cls;
-    line.textContent = '[' + t + '] ' + msg;
-    logEl.appendChild(line);
-    logEl.scrollTop = logEl.scrollHeight;
-  }
-
-  function copyText(text) {
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      return navigator.clipboard.writeText(text);
-    }
-    return new Promise(function (resolve, reject) {
-      var ta = document.createElement('textarea');
-      ta.value = text;
-      ta.style.cssText = 'position:fixed;top:0;left:0;width:1px;height:1px;opacity:0';
-      document.body.appendChild(ta);
-      ta.focus();
-      ta.select();
-      try {
-        document.execCommand('copy') ? resolve() : reject(new Error('execCommand が false を返しました'));
-      } catch (e) {
-        reject(e);
-      } finally {
-        document.body.removeChild(ta);
-      }
-    });
-  }
-
-  document.getElementById('copyLogBtn').addEventListener('click', function () {
-    copyText(logEl.innerText).then(function () {
-      log('ログをコピーしました', 'ok');
-    }).catch(function (e) {
-      log('ログのコピーに失敗しました: ' + e.message, 'err');
-    });
-  });
-
-  document.getElementById('clearBtn').addEventListener('click', function () {
-    logEl.textContent = '';
-    log('ログをクリアしました');
-  });
-
-  var bm = document.querySelector('.bm');
-  bm.addEventListener('dragstart', function () { log('ドラッグ開始 — ブックマークバーにドロップしてください'); });
-  bm.addEventListener('dragend', function () { log('ドラッグ終了（バーに登録されたか確認してください）'); });
-  bm.addEventListener('click', function (e) {
-    e.preventDefault();
-    log('このページ上では実行できません。Google カレンダーを開いてブックマークから実行してください。', 'warn');
-  });
-
-  log('準備完了。ブックマークレット ' + bm.getAttribute('href').length + ' bytes', 'ok');
-  if (!navigator.clipboard) log('このブラウザは navigator.clipboard 非対応です（execCommand で代替します）', 'warn');
-})();
-</script>
 </body>
 </html>
