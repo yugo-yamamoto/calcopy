@@ -96,15 +96,30 @@
     return url.replace(/[.,;:!?'"]+$/, '');
   }
 
+  /* 説明欄のリンクは https://www.google.com/url?q=<本来のURL>&sa=... に包まれている */
+  function unwrapGoogleRedirect(href) {
+    var m = /^https?:\/\/(?:www\.)?google\.com\/url\?(?:[^&]*&)*?q=([^&]*)/i.exec(href || '');
+    if (!m) return href || '';
+    try { return decodeURIComponent(m[1]); } catch (e) { return m[1]; }
+  }
+
+  function cleanConferenceUrl(url) {
+    url = trimUrl(url);
+    /* Meet はパスだけで会議が特定できる。authuser や hs は追跡用なので落とす。
+       Zoom の ?pwd= や Teams の ?context= は必須なので残す。 */
+    if (/^https?:\/\/meet\.google\.com\//i.test(url)) url = url.split('?')[0];
+    return url;
+  }
+
   /* ダイアログ内から会議 URL を1つ探す（リンク優先、無ければ本文テキストから） */
   function findConferenceUrl(dialog) {
     var links = dialog.querySelectorAll('a[href]');
     for (var i = 0; i < links.length; i++) {
-      var hit = (links[i].getAttribute('href') || '').match(CONF_URL);
-      if (hit) return trimUrl(hit[0]);
+      var hit = unwrapGoogleRedirect(links[i].getAttribute('href')).match(CONF_URL);
+      if (hit) return cleanConferenceUrl(hit[0]);
     }
     var m = (dialog.innerText || dialog.textContent || '').match(CONF_URL);
-    return m ? trimUrl(m[0]) : '';
+    return m ? cleanConferenceUrl(m[0]) : '';
   }
 
   /* ------------------------------------------------------------------ *
