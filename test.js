@@ -1,4 +1,5 @@
 const fs = require('fs');
+const path = require('path');
 const { JSDOM } = require('jsdom');
 
 // 実際の Google カレンダー DOM から採取したマークアップを再現した fixture
@@ -44,7 +45,9 @@ const SEARCH = `
  </div>
 </div>`;
 
-const bm = fs.readFileSync('/root/work/calcopy/calcopy.bookmarklet.txt', 'utf8');
+// ビルド済みのブックマークレット（javascript: URL）を、ブラウザと同じようにデコードして実行する
+const BOOKMARKLET = path.join(__dirname, 'calcopy.bookmarklet.txt');
+const bm = fs.readFileSync(BOOKMARKLET, 'utf8');
 const code = decodeURIComponent(bm.replace(/^javascript:/, ''));
 
 function run(bodyHtml, label) {
