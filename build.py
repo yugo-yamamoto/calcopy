@@ -57,7 +57,6 @@ def main() -> None:
     PAGE.write_text(
         template
         .replace("{{BOOKMARKLET_HREF}}", html.escape(bookmarklet, quote=True))
-        .replace("{{BOOKMARKLET_TEXT}}", html.escape(bookmarklet))
         .replace("{{SIZE}}", f"{len(bookmarklet):,}"),
         encoding="utf-8",
     )

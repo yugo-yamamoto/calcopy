@@ -38,15 +38,11 @@
   table { border-collapse: collapse; width: 100%; font-size: 14px; }
   th, td { border: 1px solid var(--line); padding: 9px 12px; text-align: left; vertical-align: top; }
   th { background: var(--code); white-space: nowrap; }
-  code, pre, #log, #bmsrc {
+  code, pre, #log {
     font-family: ui-monospace, Consolas, "BIZ UDGothic", monospace;
   }
   code { background: var(--code); padding: 2px 6px; border-radius: 4px; font-size: 13px; }
   pre { background: var(--code); padding: 14px; border-radius: 8px; overflow-x: auto; font-size: 13px; }
-  #bmsrc {
-    width: 100%; height: 110px; font-size: 11px; padding: 10px; border-radius: 8px;
-    border: 1px solid var(--line); background: var(--code); color: var(--fg); resize: vertical;
-  }
   #log {
     background: #10141a; color: #d7e2ee; border-radius: 8px; padding: 12px;
     height: 190px; overflow-y: auto; font-size: 12px; line-height: 1.7; white-space: pre-wrap;
@@ -82,17 +78,7 @@
   </div>
   <figure>
     <img src="docs/calcopy-install.svg" alt="calcopy ボタンをブックマークバーにドラッグ＆ドロップする操作の図">
-    <figcaption>① 青い calcopy ボタンをブックマークバーへドラッグ＆ドロップする（図はダミー画面）</figcaption>
   </figure>
-  <p class="hint">
-    手動で登録する場合は、下のソースをコピーして、新規ブックマークの「URL」欄に貼り付けてください。
-  </p>
-  <div class="row">
-    <button id="copyBtn" type="button">ソースをクリップボードにコピー</button>
-    <button id="clearBtn" type="button">ログをクリア</button>
-    <button id="copyLogBtn" type="button">ログをコピー（AI に渡す用）</button>
-  </div>
-  <textarea id="bmsrc" readonly spellcheck="false">{{BOOKMARKLET_TEXT}}</textarea>
 
   <h2>2. 使い方</h2>
   <p>Google カレンダーを開いた状態で、ブックマークバーの <strong>calcopy</strong> をクリックします。
@@ -160,7 +146,10 @@ https://us02web.zoom.us/j/1234567890?pwd=…</pre>
   </ul>
 
   <h2>3. 動作ログ</h2>
-  <p class="hint">このページ上の操作ログです。コピー実行時は、カレンダー画面の右下にも結果がトーストで表示されます。</p>
+  <div class="row">
+    <button id="clearBtn" type="button">ログをクリア</button>
+    <button id="copyLogBtn" type="button">ログをコピー（AI に渡す用）</button>
+  </div>
   <div id="log"></div>
 
   <p class="hint" style="margin-top:28px; border-top:1px solid var(--line); padding-top:14px">
@@ -174,7 +163,6 @@ https://us02web.zoom.us/j/1234567890?pwd=…</pre>
   'use strict';
 
   var logEl = document.getElementById('log');
-  var srcEl = document.getElementById('bmsrc');
 
   function log(msg, cls) {
     var t = new Date().toTimeString().slice(0, 8);
@@ -190,21 +178,21 @@ https://us02web.zoom.us/j/1234567890?pwd=…</pre>
       return navigator.clipboard.writeText(text);
     }
     return new Promise(function (resolve, reject) {
-      srcEl.focus();
-      srcEl.select();
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.cssText = 'position:fixed;top:0;left:0;width:1px;height:1px;opacity:0';
+      document.body.appendChild(ta);
+      ta.focus();
+      ta.select();
       try {
         document.execCommand('copy') ? resolve() : reject(new Error('execCommand が false を返しました'));
-      } catch (e) { reject(e); }
+      } catch (e) {
+        reject(e);
+      } finally {
+        document.body.removeChild(ta);
+      }
     });
   }
-
-  document.getElementById('copyBtn').addEventListener('click', function () {
-    copyText(srcEl.value).then(function () {
-      log('ブックマークレットのソースをコピーしました (' + srcEl.value.length + ' bytes)', 'ok');
-    }).catch(function (e) {
-      log('コピーに失敗しました: ' + e.message + ' / 手動で選択してコピーしてください', 'err');
-    });
-  });
 
   document.getElementById('copyLogBtn').addEventListener('click', function () {
     copyText(logEl.innerText).then(function () {
@@ -227,7 +215,7 @@ https://us02web.zoom.us/j/1234567890?pwd=…</pre>
     log('このページ上では実行できません。Google カレンダーを開いてブックマークから実行してください。', 'warn');
   });
 
-  log('準備完了。ブックマークレット ' + srcEl.value.length + ' bytes', 'ok');
+  log('準備完了。ブックマークレット ' + bm.getAttribute('href').length + ' bytes', 'ok');
   if (!navigator.clipboard) log('このブラウザは navigator.clipboard 非対応です（execCommand で代替します）', 'warn');
 })();
 </script>
