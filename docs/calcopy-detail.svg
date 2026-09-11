@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 530" width="880" height="530" font-family="'Yu Gothic', YuGothic, Meiryo, 'Hiragino Sans', 'Noto Sans JP', sans-serif">
+  <title>予定の詳細ポップアップでブックマークレットを実行したときの画面（ダミーデータ）</title>
+  <rect width="880" height="530" rx="8" fill="#ffffff" stroke="#dadce0"/>
+
+  <!-- ブックマークバー -->
+  <path d="M0 8a8 8 0 0 1 8-8h864a8 8 0 0 1 8 8v28H0z" fill="#f8f9fa"/>
+  <line x1="0" y1="36" x2="880" y2="36" stroke="#dadce0"/>
+  <rect x="14" y="6" width="102" height="24" rx="5" fill="#e8f0fe" stroke="#1a73e8" stroke-width="1.5"/>
+  <rect x="24" y="12" width="9" height="12" rx="1.5" fill="none" stroke="#1967d2" stroke-width="1.4"/>
+  <line x1="26.5" y1="11" x2="30.5" y2="11" stroke="#1967d2" stroke-width="2.6"/>
+  <text x="41" y="22" font-size="12" fill="#1967d2">calcopy</text>
+  <text x="134" y="22" font-size="12" fill="#5f6368">社内Wiki</text>
+  <text x="202" y="22" font-size="12" fill="#5f6368">経費精算</text>
+
+  <!-- 週ビューのグリッド（背景） -->
+  <text x="88"  y="66" font-size="11" fill="#70757a" text-anchor="middle">火</text>
+  <text x="178" y="66" font-size="11" fill="#1a73e8" text-anchor="middle">水</text>
+  <text x="268" y="66" font-size="11" fill="#70757a" text-anchor="middle">木</text>
+  <text x="88"  y="86" font-size="18" fill="#3c4043" text-anchor="middle">15</text>
+  <circle cx="178" cy="80" r="14" fill="#1a73e8"/>
+  <text x="178" y="86" font-size="18" fill="#ffffff" text-anchor="middle">16</text>
+  <text x="268" y="86" font-size="18" fill="#3c4043" text-anchor="middle">17</text>
+  <text x="26" y="112" font-size="9.5" fill="#70757a">09:00</text>
+  <text x="26" y="162" font-size="9.5" fill="#70757a">10:00</text>
+  <text x="26" y="212" font-size="9.5" fill="#70757a">11:00</text>
+  <line x1="58" y1="100" x2="330" y2="100" stroke="#e8eaed"/>
+  <line x1="58" y1="150" x2="330" y2="150" stroke="#e8eaed"/>
+  <line x1="58" y1="200" x2="330" y2="200" stroke="#e8eaed"/>
+  <line x1="58" y1="250" x2="330" y2="250" stroke="#e8eaed"/>
+  <line x1="58" y1="96" x2="58" y2="250" stroke="#e8eaed"/>
+  <line x1="133" y1="96" x2="133" y2="250" stroke="#e8eaed"/>
+  <line x1="223" y1="96" x2="223" y2="250" stroke="#e8eaed"/>
+  <!-- クリックする予定チップ -->
+  <rect x="135" y="102" width="86" height="36" rx="4" fill="#3f51b5"/>
+  <text x="142" y="117" font-size="9" fill="#ffffff">09:00</text>
+  <text x="142" y="130" font-size="9" fill="#ffffff">サンプル定例…</text>
+  <rect x="225" y="152" width="86" height="26" rx="4" fill="#0b8043"/>
+  <text x="232" y="168" font-size="9" fill="#ffffff">10:00 レビュー</text>
+
+  <!-- 手順① 予定をクリック -->
+  <circle cx="112" cy="182" r="13" fill="#d93025"/>
+  <text x="112" y="187" font-size="13" fill="#ffffff" text-anchor="middle" font-weight="bold">1</text>
+  <path d="M120 170 C 132 154, 140 146, 148 140" fill="none" stroke="#d93025" stroke-width="2" stroke-dasharray="5 4"/>
+  <polygon points="152,134 142,139 149,145" fill="#d93025"/>
+  <text x="40" y="228" font-size="12.5" fill="#d93025">予定をクリックして</text>
+  <text x="40" y="246" font-size="12.5" fill="#d93025">詳細ポップアップを開く</text>
+
+  <!-- 詳細ポップアップ -->
+  <rect x="306" y="76" width="404" height="252" rx="10" fill="#f1f3f4"/>
+  <rect x="302" y="72" width="404" height="252" rx="10" fill="#ffffff" stroke="#dadce0"/>
+  <!-- ヘッダーのアイコン類 -->
+  <g stroke="#5f6368" stroke-width="1.6" fill="none">
+    <path d="M556 90 l12 12 M568 90 l-12 12"/>
+    <path d="M596 102 l10 -10 3 3 -10 10z"/>
+    <path d="M626 94 h18 M633 94 v-3 h5 v3 M629 97 l1 12 h11 l1 -12"/>
+  </g>
+  <circle cx="672" cy="93" r="1.6" fill="#5f6368"/>
+  <circle cx="672" cy="99" r="1.6" fill="#5f6368"/>
+  <circle cx="672" cy="105" r="1.6" fill="#5f6368"/>
+  <!-- タイトルと日時 -->
+  <rect x="324" y="124" width="12" height="12" rx="2" fill="#3f51b5"/>
+  <text x="348" y="136" font-size="16" fill="#3c4043">サンプル定例MTG</text>
+  <text x="348" y="158" font-size="11.5" fill="#70757a">9月 16日 (水曜日)・09:00～09:45</text>
+  <text x="348" y="176" font-size="11.5" fill="#70757a">毎週 水曜日</text>
+  <!-- 場所（会議URL） -->
+  <g stroke="#5f6368" stroke-width="1.4" fill="none">
+    <path d="M330 200 a5 5 0 1 1 10 0 c0 4 -5 10 -5 10 s-5 -6 -5 -10z"/>
+  </g>
+  <text x="348" y="207" font-size="10.5" fill="#1a73e8">https://us02web.zoom.us/j/1234567890?pwd=abcdEFGH1234</text>
+  <line x1="348" y1="210" x2="668" y2="210" stroke="#1a73e8" stroke-width="0.8"/>
+  <!-- ゲスト -->
+  <circle cx="333" cy="234" r="3.4" fill="none" stroke="#5f6368" stroke-width="1.4"/>
+  <path d="M328 243 a5.5 5.5 0 0 1 11 0" fill="none" stroke="#5f6368" stroke-width="1.4"/>
+  <text x="348" y="241" font-size="11.5" fill="#3c4043">2 人のゲスト</text>
+  <text x="348" y="259" font-size="10.5" fill="#70757a">山田太郎（主催者）, 鈴木花子</text>
+  <!-- 説明 -->
+  <g stroke="#5f6368" stroke-width="1.4">
+    <line x1="329" y1="286" x2="341" y2="286"/>
+    <line x1="329" y1="291" x2="341" y2="291"/>
+    <line x1="329" y1="296" x2="337" y2="296"/>
+  </g>
+  <text x="348" y="291" font-size="10.5" fill="#70757a">説明: Zoom ミーティングへの招待 ...</text>
+
+  <!-- 手順② calcopy をクリック -->
+  <text x="856" y="58" font-size="12.5" fill="#d93025" text-anchor="end">ポップアップを開いたまま calcopy をクリック</text>
+  <circle cx="508" cy="52" r="13" fill="#d93025"/>
+  <text x="508" y="57" font-size="13" fill="#ffffff" text-anchor="middle" font-weight="bold">2</text>
+  <path d="M494 50 C 380 58, 200 56, 104 46" fill="none" stroke="#d93025" stroke-width="2" stroke-dasharray="5 4"/>
+  <polygon points="96,43 108,41 105,51" fill="#d93025"/>
+
+  <!-- 手順③ コピー結果 -->
+  <text x="40" y="400" font-size="12.5" fill="#d93025">タイトル / 日付 時刻 / 会議URL の3行がコピーされる</text>
+  <text x="40" y="420" font-size="12.5" fill="#d93025">（ゲストや説明はコピーされない）</text>
+  <path d="M330 428 C 380 436, 410 432, 430 428" fill="none" stroke="#d93025" stroke-width="2" stroke-dasharray="5 4"/>
+  <polygon points="438,427 427,422 428,433" fill="#d93025"/>
+  <rect x="446" y="358" width="410" height="146" rx="10" fill="#202124"/>
+  <text x="466" y="386" font-size="12.5" fill="#ffffff" font-weight="bold">コピーしました [詳細] 1件</text>
+  <text x="466" y="416" font-size="12" fill="#d7e2ee">サンプル定例MTG</text>
+  <text x="466" y="438" font-size="12" fill="#d7e2ee">09/16(水) 09:00～09:45</text>
+  <text x="466" y="460" font-size="10.5" fill="#d7e2ee">https://us02web.zoom.us/j/1234567890?pwd=abcdEFGH1234</text>
+  <text x="466" y="488" font-size="10.5" fill="#9aa0a6">クリックで閉じる / 6秒で自動的に消える</text>
+  <circle cx="446" cy="358" r="13" fill="#d93025"/>
+  <text x="446" y="363" font-size="13" fill="#ffffff" text-anchor="middle" font-weight="bold">3</text>
+</svg>
