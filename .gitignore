@@ -1,0 +1,9 @@
+# テスト用（node test.js を実行すると作られる）
+node_modules/
+package.json
+package-lock.json
+
+# スクリーンショットなど、実データが写りうるファイルを誤ってコミットしないため
+*.png
+*.jpg
+*.jpeg

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>calcopy - Google カレンダー コピー用ブックマークレット</title>
+<style>
+  :root {
+    --bg: #f6f7f9; --card: #fff; --fg: #1f2328; --muted: #5b6470;
+    --line: #dfe3e8; --accent: #1a73e8; --code: #f2f4f7;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 32px 16px 64px; background: var(--bg); color: var(--fg);
+    font-family: "游ゴシック", YuGothic, "Yu Gothic", Meiryo, "BIZ UDGothic", sans-serif;
+    line-height: 1.8; font-size: 15px;
+  }
+  main { max-width: 860px; margin: 0 auto; }
+  h1 { font-size: 24px; margin: 0 0 4px; }
+  h2 { font-size: 17px; margin: 32px 0 10px; padding-bottom: 6px; border-bottom: 2px solid var(--line); }
+  .lead { color: var(--muted); margin: 0 0 24px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 20px; }
+  .drop {
+    display: flex; gap: 16px; align-items: center; flex-wrap: wrap;
+    background: var(--card); border: 2px dashed var(--accent); border-radius: 10px; padding: 20px;
+  }
+  .bm {
+    display: inline-block; padding: 10px 22px; border-radius: 8px; background: var(--accent);
+    color: #fff; font-weight: 700; text-decoration: none; cursor: grab; white-space: nowrap;
+  }
+  .bm:active { cursor: grabbing; }
+  .hint { color: var(--muted); font-size: 13px; }
+  button {
+    font: inherit; font-size: 13px; padding: 7px 14px; border-radius: 7px;
+    border: 1px solid var(--line); background: #fff; color: var(--fg); cursor: pointer;
+  }
+  button:hover { background: var(--code); }
+  table { border-collapse: collapse; width: 100%; font-size: 14px; }
+  th, td { border: 1px solid var(--line); padding: 9px 12px; text-align: left; vertical-align: top; }
+  th { background: var(--code); white-space: nowrap; }
+  code, pre, #log, #bmsrc {
+    font-family: ui-monospace, Consolas, "BIZ UDGothic", monospace;
+  }
+  code { background: var(--code); padding: 2px 6px; border-radius: 4px; font-size: 13px; }
+  pre { background: var(--code); padding: 14px; border-radius: 8px; overflow-x: auto; font-size: 13px; }
+  #bmsrc {
+    width: 100%; height: 110px; font-size: 11px; padding: 10px; border-radius: 8px;
+    border: 1px solid var(--line); background: var(--code); color: var(--fg); resize: vertical;
+  }
+  #log {
+    background: #10141a; color: #d7e2ee; border-radius: 8px; padding: 12px;
+    height: 190px; overflow-y: auto; font-size: 12px; line-height: 1.7; white-space: pre-wrap;
+  }
+  .row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-bottom: 10px; }
+  .ok { color: #34a853; } .warn { color: #f9ab00; } .err { color: #ff6b6b; }
+</style>
+</head>
+<body>
+<main>
+  <h1>calcopy</h1>
+  <p class="lead">Google カレンダーの予定を、タブ区切りでクリップボードにコピーするブックマークレットです。<br>
+    <strong>予定の詳細</strong>と<strong>検索結果一覧</strong>で、動作が自動で切り替わります。</p>
+
+  <h2>1. インストール</h2>
+  <div class="drop">
+    <a class="bm" href="{{BOOKMARKLET_HREF}}">📋 calcopy</a>
+    <div class="hint">
+      このボタンを<strong>ブックマークバーにドラッグ＆ドロップ</strong>してください（{{SIZE}} bytes）。<br>
+      ブックマークバーの表示は <code>Ctrl+Shift+B</code> で切り替えられます。
+    </div>
+  </div>
+  <p class="hint" style="margin-top:10px">
+    手動で登録する場合は、下のソースをコピーして、新規ブックマークの「URL」欄に貼り付けてください。
+  </p>
+  <div class="row">
+    <button id="copyBtn" type="button">ソースをクリップボードにコピー</button>
+    <button id="clearBtn" type="button">ログをクリア</button>
+    <button id="copyLogBtn" type="button">ログをコピー（AI に渡す用）</button>
+  </div>
+  <textarea id="bmsrc" readonly spellcheck="false">{{BOOKMARKLET_TEXT}}</textarea>
+
+  <h2>2. 使い方</h2>
+  <table>
+    <thead>
+      <tr><th>実行する場所</th><th>コピーされるもの</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>予定の詳細</strong><br><span class="hint">予定をクリックして出るポップアップ<br>（日 / 週 / 月ビューでも検索結果でも可）</span></td>
+        <td>その予定 1 件（改行つなぎ）<br><span class="hint">タイトル / 日付 + 時刻 / 会議 URL</span></td>
+      </tr>
+      <tr>
+        <td><strong>検索結果一覧</strong><br><span class="hint">カレンダー上部の検索窓から検索した画面</span></td>
+        <td>一覧のすべての予定<br><span class="hint">日付 + 時間（スペースつなぎ）</span></td>
+      </tr>
+    </tbody>
+  </table>
+  <p class="hint">※ 詳細ポップアップが開いているときは、つねに「詳細」モードが優先されます。<br>
+    ※ 上記以外の画面（詳細を開いていない日 / 週 / 月ビューなど）では何もコピーしません。</p>
+
+  <h2>3. 出力例</h2>
+  <p><strong>検索結果一覧</strong>は、1 行につき「日付 + 時間」をスペースでつなぎます。</p>
+  <pre>2026/09/15(火) 18:00～19:00
+2026/09/17(木) 15:00～16:00
+2026/09/18(金) 15:00～16:00</pre>
+  <p><strong>詳細ポップアップ</strong>で実行した場合は、各項目が<strong>改行</strong>でつながります:</p>
+  <pre>サンプル定例MTG
+09/16(水) 09:00～09:45
+https://us02web.zoom.us/j/1234567890?pwd=…</pre>
+  <p class="hint">
+    3 行目は <strong>Google Meet / Zoom / Teams</strong> の URL があるときだけ付きます。
+    場所欄のリンク → Meet の参加ボタン → 説明欄の本文、の順に探します。<br>
+    会議 URL が無い予定（物理的な会議室だけ、場所なし）では 2 行になります。<br>
+    詳細ポップアップには年が表示されないため、日付は「月/日(曜)」です。
+    別の年の予定など、画面に年が出ている場合だけ <code>2027/03/16(火)</code> の形式になります。
+  </p>
+
+  <h2>4. 動作ログ</h2>
+  <p class="hint">このページ上の操作ログです。コピー実行時は、カレンダー画面の右下にも結果がトーストで表示されます。</p>
+  <div id="log"></div>
+</main>
+
+<script>
+(function () {
+  'use strict';
+
+  var logEl = document.getElementById('log');
+  var srcEl = document.getElementById('bmsrc');
+
+  function log(msg, cls) {
+    var t = new Date().toTimeString().slice(0, 8);
+    var line = document.createElement('div');
+    if (cls) line.className = cls;
+    line.textContent = '[' + t + '] ' + msg;
+    logEl.appendChild(line);
+    logEl.scrollTop = logEl.scrollHeight;
+  }
+
+  function copyText(text) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      return navigator.clipboard.writeText(text);
+    }
+    return new Promise(function (resolve, reject) {
+      srcEl.focus();
+      srcEl.select();
+      try {
+        document.execCommand('copy') ? resolve() : reject(new Error('execCommand が false を返しました'));
+      } catch (e) { reject(e); }
+    });
+  }
+
+  document.getElementById('copyBtn').addEventListener('click', function () {
+    copyText(srcEl.value).then(function () {
+      log('ブックマークレットのソースをコピーしました (' + srcEl.value.length + ' bytes)', 'ok');
+    }).catch(function (e) {
+      log('コピーに失敗しました: ' + e.message + ' / 手動で選択してコピーしてください', 'err');
+    });
+  });
+
+  document.getElementById('copyLogBtn').addEventListener('click', function () {
+    copyText(logEl.innerText).then(function () {
+      log('ログをコピーしました', 'ok');
+    }).catch(function (e) {
+      log('ログのコピーに失敗しました: ' + e.message, 'err');
+    });
+  });
+
+  document.getElementById('clearBtn').addEventListener('click', function () {
+    logEl.textContent = '';
+    log('ログをクリアしました');
+  });
+
+  var bm = document.querySelector('.bm');
+  bm.addEventListener('dragstart', function () { log('ドラッグ開始 — ブックマークバーにドロップしてください'); });
+  bm.addEventListener('dragend', function () { log('ドラッグ終了（バーに登録されたか確認してください）'); });
+  bm.addEventListener('click', function (e) {
+    e.preventDefault();
+    log('このページ上では実行できません。Google カレンダーを開いてブックマークから実行してください。', 'warn');
+  });
+
+  log('準備完了。ブックマークレット ' + srcEl.value.length + ' bytes', 'ok');
+  if (!navigator.clipboard) log('このブラウザは navigator.clipboard 非対応です（execCommand で代替します）', 'warn');
+})();
+</script>
+</body>
+</html>
