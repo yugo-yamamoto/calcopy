@@ -12,19 +12,29 @@ Google カレンダーの予定をクリップボードにコピーするブッ�
 
 ## インストール
 
+### 📋 https://yugo-yamamoto.github.io/calcopy/
+
+上のインストールページを開いて、青い **calcopy** ボタンを
+**ブックマークバーにドラッグ＆ドロップ**するだけです。
+
 ![インストール手順](docs/calcopy-install.svg)
 
-インストールページ `index.html` をブラウザで開き、青い **calcopy** ボタンを
-**ブックマークバーにドラッグ＆ドロップ**します。これだけで完了です。
+ブックマークバーが隠れているときは `Ctrl+Shift+B` で表示できます。
+
+> **この README から直接ドラッグできない理由**
+> GitHub は Markdown 内の `javascript:` リンクを、リンクごと削除します。
+> `[calcopy](javascript:...)` と書いても `<a>` が消えて素のテキストになるため、
+> README にブックマークレットを置いても機能しません。
+> そのため配布には、生の HTML をそのまま配信できる GitHub Pages を使っています。
+
+手で登録する場合は、`calcopy.bookmarklet.txt` の中身を新規ブックマークの「URL」欄に貼り付けてください。
+ローカルでインストールページを開く場合は次のとおりです。
 
 ```bash
 # 空きポートでサーバーを起動してインストールページを開く（WSL の場合）
 python3 -m http.server 8080 &
 powershell.exe -NoProfile -Command "Start-Process 'http://localhost:8080/index.html'"
 ```
-
-ブックマークバーが隠れているときは `Ctrl+Shift+B` で表示できます。
-手で登録したい場合は、`calcopy.bookmarklet.txt` の中身を新規ブックマークの「URL」欄に貼り付けてください。
 
 ## 使い方
 
