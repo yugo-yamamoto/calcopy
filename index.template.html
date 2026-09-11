@@ -53,6 +53,17 @@
   }
   .row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-bottom: 10px; }
   .ok { color: #34a853; } .warn { color: #f9ab00; } .err { color: #ff6b6b; }
+  h3 { font-size: 16px; margin: 30px 0 8px; }
+  figure { margin: 12px 0 16px; }
+  figure img {
+    display: block; width: 100%; height: auto;
+    border: 1px solid var(--line); border-radius: 10px; background: #fff;
+  }
+  figcaption { color: var(--muted); font-size: 12.5px; margin-top: 6px; }
+  ol.steps { margin: 8px 0 14px; padding-left: 1.6em; }
+  ol.steps li { margin-bottom: 3px; }
+  .note { color: var(--muted); font-size: 13px; margin: 8px 0 0; padding-left: 1.1em; }
+  .note li { margin-bottom: 3px; }
 </style>
 </head>
 <body>
@@ -69,7 +80,11 @@
       ブックマークバーの表示は <code>Ctrl+Shift+B</code> で切り替えられます。
     </div>
   </div>
-  <p class="hint" style="margin-top:10px">
+  <figure>
+    <img src="docs/calcopy-install.svg" alt="calcopy ボタンをブックマークバーにドラッグ＆ドロップする操作の図">
+    <figcaption>① 青い calcopy ボタンをブックマークバーへドラッグ＆ドロップする（図はダミー画面）</figcaption>
+  </figure>
+  <p class="hint">
     手動で登録する場合は、下のソースをコピーして、新規ブックマークの「URL」欄に貼り付けてください。
   </p>
   <div class="row">
@@ -80,6 +95,8 @@
   <textarea id="bmsrc" readonly spellcheck="false">{{BOOKMARKLET_TEXT}}</textarea>
 
   <h2>2. 使い方</h2>
+  <p>Google カレンダーを開いた状態で、ブックマークバーの <strong>calcopy</strong> をクリックします。
+    コピー結果は画面の右下にトーストで表示されます（クリックで閉じる / 6 秒で自動的に消える）。</p>
   <table>
     <thead>
       <tr><th>実行する場所</th><th>コピーされるもの</th></tr>
@@ -91,31 +108,58 @@
       </tr>
       <tr>
         <td><strong>検索結果一覧</strong><br><span class="hint">カレンダー上部の検索窓から検索した画面</span></td>
-        <td>一覧のすべての予定<br><span class="hint">日付 + 時間（スペースつなぎ）</span></td>
+        <td>一覧のすべての予定<br><span class="hint">日付 + 時刻（スペースつなぎ）</span></td>
       </tr>
     </tbody>
   </table>
-  <p class="hint">※ 詳細ポップアップが開いているときは、つねに「詳細」モードが優先されます。<br>
-    ※ 上記以外の画面（詳細を開いていない日 / 週 / 月ビューなど）では何もコピーしません。</p>
 
-  <h2>3. 出力例</h2>
-  <p><strong>検索結果一覧</strong>は、1 行につき「日付 + 時間」をスペースでつなぎます。</p>
-  <pre>2026/09/15(火) 18:00～19:00
-2026/09/17(木) 15:00～16:00
-2026/09/18(金) 15:00～16:00</pre>
-  <p><strong>詳細ポップアップ</strong>で実行した場合は、各項目が<strong>改行</strong>でつながります:</p>
+  <h3>2-1. 予定 1 件をコピーする（詳細ポップアップ）</h3>
+  <figure>
+    <img src="docs/calcopy-detail.svg" alt="予定をクリックして詳細ポップアップを開き、calcopy を実行する操作の図">
+    <figcaption>図はダミー画面です</figcaption>
+  </figure>
+  <ol class="steps">
+    <li>コピーしたい予定をクリックして、詳細ポップアップを開く</li>
+    <li>ポップアップを<strong>開いたまま</strong> calcopy をクリック</li>
+    <li>次の 3 行がクリップボードに入る</li>
+  </ol>
   <pre>サンプル定例MTG
 09/16(水) 09:00～09:45
 https://us02web.zoom.us/j/1234567890?pwd=…</pre>
-  <p class="hint">
-    3 行目は <strong>Google Meet / Zoom / Teams</strong> の URL があるときだけ付きます。
-    場所欄のリンク → Meet の参加ボタン → 説明欄の本文、の順に探します。<br>
-    会議 URL が無い予定（物理的な会議室だけ、場所なし）では 2 行になります。<br>
-    詳細ポップアップには年が表示されないため、日付は「月/日(曜)」です。
-    別の年の予定など、画面に年が出ている場合だけ <code>2027/03/16(火)</code> の形式になります。
-  </p>
+  <ul class="note">
+    <li>日 / 週 / 月ビューでも、検索結果一覧からでも、ポップアップを開けば同じように使えます。</li>
+    <li>3 行目は <strong>Google Meet / Zoom / Teams</strong> の URL があるときだけ付きます。
+      場所欄のリンク → Meet の参加ボタン → 説明欄の本文、の順に探します。
+      会議 URL が無い予定（物理的な会議室だけ、場所なし）では 2 行になります。</li>
+    <li>ゲストや説明はコピーされません。</li>
+    <li>詳細ポップアップには年が表示されないため、日付は「月/日(曜)」です。
+      別の年の予定など、画面に年が出ている場合だけ <code>2027/03/16(火)</code> の形式になります。</li>
+  </ul>
 
-  <h2>4. 動作ログ</h2>
+  <h3>2-2. 検索結果をまとめてコピーする</h3>
+  <figure>
+    <img src="docs/calcopy-search.svg" alt="検索結果一覧で calcopy を実行し、3 件がまとめてコピーされる操作の図">
+    <figcaption>図はダミー画面です</figcaption>
+  </figure>
+  <ol class="steps">
+    <li>カレンダー上部の検索窓で検索し、結果一覧を表示する</li>
+    <li>calcopy をクリック</li>
+    <li>一覧のすべての予定が、1 行 1 件でクリップボードに入る</li>
+  </ol>
+  <pre>2026/09/15(火) 18:00～19:00
+2026/09/17(木) 15:00～16:00
+2026/09/18(金) 15:00～16:00</pre>
+  <p class="hint">日付と時刻をスペースでつなぎます。タイトルは付きません。</p>
+
+  <h3>2-3. コピーされない場合</h3>
+  <ul class="note">
+    <li><strong>詳細ポップアップを開いていない日 / 週 / 月ビュー</strong>では何もコピーせず、
+      「Google カレンダーの検索結果、または予定の詳細を開いた状態で実行してください。」と表示します。</li>
+    <li>詳細ポップアップが開いているときは、どの画面でも<strong>つねに「詳細」モードが優先</strong>されます。
+      検索結果をまとめてコピーしたいときは、ポップアップを閉じてから実行してください。</li>
+  </ul>
+
+  <h2>3. 動作ログ</h2>
   <p class="hint">このページ上の操作ログです。コピー実行時は、カレンダー画面の右下にも結果がトーストで表示されます。</p>
   <div id="log"></div>
 
