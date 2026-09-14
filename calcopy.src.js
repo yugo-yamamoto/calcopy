@@ -111,15 +111,30 @@
     return url;
   }
 
-  /* ダイアログ内から会議 URL を1つ探す（リンク優先、無ければ本文テキストから） */
-  function findConferenceUrl(dialog) {
-    var links = dialog.querySelectorAll('a[href]');
+  /* 会議 URL を探す順番。DOM 上は Google が自動で付けた Meet の参加ボタンが
+     先に来るため、DOM 順に拾うと、場所欄に Zoom を指定していても Meet を
+     拾ってしまう。ユーザーが明示した場所欄を最優先にする。 */
+  var CONF_SOURCES = ['#xDetDlgLoc', '#xDetDlgVideo', '#xDetDlgDesc'];
+
+  /* 範囲内のリンクから会議 URL を1つ探す（無ければ本文テキストからも探す） */
+  function conferenceUrlIn(scope) {
+    if (!scope) return '';
+    var links = scope.querySelectorAll('a[href]');
     for (var i = 0; i < links.length; i++) {
       var hit = unwrapGoogleRedirect(links[i].getAttribute('href')).match(CONF_URL);
       if (hit) return cleanConferenceUrl(hit[0]);
     }
-    var m = (dialog.innerText || dialog.textContent || '').match(CONF_URL);
+    var m = (scope.innerText || scope.textContent || '').match(CONF_URL);
     return m ? cleanConferenceUrl(m[0]) : '';
+  }
+
+  /* 場所欄 → Meet の参加ボタン → 説明欄 の順に会議 URL を探す */
+  function findConferenceUrl(dialog) {
+    for (var i = 0; i < CONF_SOURCES.length; i++) {
+      var url = conferenceUrlIn(dialog.querySelector(CONF_SOURCES[i]));
+      if (url) return url;
+    }
+    return conferenceUrlIn(dialog);
   }
 
   /* ------------------------------------------------------------------ *
